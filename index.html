@@ -17,6 +17,13 @@
     .name { margin:2px 0 6px; font-size:15px; font-weight:600; line-height:1.25; }
     .desc { margin:0; color:var(--sub); font-size:13px; line-height:1.45; }
     .path { margin-top:6px; color:#8a94a4; font-size:11px; word-break:break-all; }
+    .group-list { display:flex; flex-direction:column; gap:20px; }
+    .group { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; }
+    .group-head { display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:10px; }
+    .group-title { margin:0; font-size:16px; font-weight:700; }
+    .group-count { font-size:12px; color:var(--sub); }
+    .group .grid { gap:10px; }
+    .group .card { border-radius:10px; }
   </style>
 </head>
 <body>
@@ -947,5 +954,56 @@
     </div>
     <p class="meta">共 115 个非系统内置应用。生成时间：2026-04-17 15:50:20 JST</p>
   </div>
+  <script>
+    (function () {
+      const grid = document.querySelector(".grid");
+      if (!grid) return;
+
+      const cards = Array.from(grid.querySelectorAll(".card"));
+      if (cards.length === 0) return;
+
+      const groups = new Map();
+      cards.forEach((card) => {
+        const descEl = card.querySelector(".desc");
+        const desc = descEl ? descEl.textContent.trim() : "";
+        const func = desc.split("，")[0] || "其他";
+        if (!groups.has(func)) groups.set(func, []);
+        groups.get(func).push(card);
+      });
+
+      const sortedGroups = Array.from(groups.entries()).sort((a, b) => b[1].length - a[1].length);
+
+      const groupList = document.createElement("div");
+      groupList.className = "group-list";
+
+      sortedGroups.forEach(([name, groupCards]) => {
+        const section = document.createElement("section");
+        section.className = "group";
+
+        const head = document.createElement("div");
+        head.className = "group-head";
+
+        const title = document.createElement("h2");
+        title.className = "group-title";
+        title.textContent = name;
+
+        const count = document.createElement("span");
+        count.className = "group-count";
+        count.textContent = groupCards.length + " 个";
+
+        const innerGrid = document.createElement("div");
+        innerGrid.className = "grid";
+        groupCards.forEach((c) => innerGrid.appendChild(c));
+
+        head.appendChild(title);
+        head.appendChild(count);
+        section.appendChild(head);
+        section.appendChild(innerGrid);
+        groupList.appendChild(section);
+      });
+
+      grid.replaceWith(groupList);
+    })();
+  </script>
 </body>
 </html>
