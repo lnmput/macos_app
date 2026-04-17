@@ -10,6 +10,10 @@
     .wrap { max-width:1100px; margin:24px auto; padding:0 16px; }
     h1 { margin:0 0 8px; font-size:24px; }
     p.meta { margin:0 0 18px; color:var(--sub); font-size:13px; }
+    .jump-bar { margin:0 0 14px; }
+    .jump-link { display:flex; align-items:center; justify-content:space-between; gap:10px; text-decoration:none; background:#eef3ff; color:#1f3c88; border:1px solid #d7e2ff; border-radius:10px; padding:10px 12px; font-size:13px; font-weight:600; }
+    .jump-link:hover { background:#e7efff; }
+    .jump-sub { font-size:12px; color:#4b5f99; font-weight:500; }
     .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
     .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; display:flex; gap:12px; align-items:flex-start; }
     .icon { width:52px; height:52px; border-radius:12px; border:1px solid var(--line); background:#fff; object-fit:cover; flex:0 0 52px; }
@@ -29,6 +33,12 @@
 <body>
   <div class="wrap">
     <h1>已安装的第三方 App 清单</h1>
+    <div class="jump-bar">
+      <a class="jump-link" href="./cli-tools.html">
+        <span>查看 Mac 命令行工具清单</span>
+        <span class="jump-sub">名称 + 功能说明 + 来源</span>
+      </a>
+    </div>
     <p class="meta">以下列表来自 /Applications 与 ~/Applications，已过滤系统内置应用。</p>
     <div class="grid">
     <div class="card">
